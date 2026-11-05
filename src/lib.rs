@@ -7,14 +7,14 @@ use std::fmt;
 
 /// Errors produced by this component. Fail-fast: errors are returned, not panicked.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum Sigmaos_signstarError {
+pub enum SignstarError {
     /// The requested operation is not valid in the current state.
     InvalidState,
     /// Input failed validation.
     InvalidInput(String),
 }
 
-impl fmt::Display for Sigmaos_signstarError {
+impl fmt::Display for SignstarError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::InvalidState => write!(f, "invalid state"),
@@ -23,20 +23,20 @@ impl fmt::Display for Sigmaos_signstarError {
     }
 }
 
-impl std::error::Error for Sigmaos_signstarError {}
+impl std::error::Error for SignstarError {}
 
 /// Core component type. Holds configuration; performs no I/O by default.
 #[derive(Debug, Clone, Default)]
-pub struct Sigmaos_signstar {
+pub struct Signstar {
     name: String,
 }
 
-impl Sigmaos_signstar {
+impl Signstar {
     /// Create a new component instance. Fails fast on empty names.
-    pub fn new(name: impl Into<String>) -> Result<Self, Sigmaos_signstarError> {
+    pub fn new(name: impl Into<String>) -> Result<Self, SignstarError> {
         let name = name.into();
         if name.trim().is_empty() {
-            return Err(Sigmaos_signstarError::InvalidInput("name must not be empty".into()));
+            return Err(SignstarError::InvalidInput("name must not be empty".into()));
         }
         Ok(Self { name })
     }
@@ -47,9 +47,9 @@ impl Sigmaos_signstar {
     }
 
     /// Perform the component's primary action. Returns a deterministic result.
-    pub fn run(&self) -> Result<String, Sigmaos_signstarError> {
+    pub fn run(&self) -> Result<String, SignstarError> {
         if self.name.is_empty() {
-            return Err(Sigmaos_signstarError::InvalidState);
+            return Err(SignstarError::InvalidState);
         }
         Ok(format!("{}: ok", self.name))
     }
@@ -62,18 +62,18 @@ mod tests {
     #[test]
     fn new_rejects_empty_name() {
         // Arrange / Act / Assert
-        assert!(matches!(Sigmaos_signstar::new("  "), Err(Sigmaos_signstarError::InvalidInput(_))));
+        assert!(matches!(Signstar::new("  "), Err(SignstarError::InvalidInput(_))));
     }
 
     #[test]
     fn run_returns_deterministic_result() {
-        let c = Sigmaos_signstar::new("test").unwrap();
+        let c = Signstar::new("test").unwrap();
         assert_eq!(c.run().unwrap(), "test: ok");
     }
 
     #[test]
     fn name_is_accessible() {
-        let c = Sigmaos_signstar::new("abc").unwrap();
+        let c = Signstar::new("abc").unwrap();
         assert_eq!(c.name(), "abc");
     }
 }
