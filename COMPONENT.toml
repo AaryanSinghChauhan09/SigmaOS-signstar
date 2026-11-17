@@ -3,7 +3,7 @@ name = "SigmaOS-signstar"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "signstar component"
+description = "SigmaOS signstar component (Arch Linux inspired)"
 upstream = []
 
 [contract]
