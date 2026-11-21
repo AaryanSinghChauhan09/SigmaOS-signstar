@@ -1,16 +1,16 @@
 [component]
 name = "SigmaOS-signstar"
 tier = 2
-stability = "scaffold"
+stability = "beta"
 language = "rust"
-description = "SigmaOS signstar component (Arch Linux inspired)"
-upstream = []
+description = "SigmaOS signstar component — Signstar secure-enclave signing protocol, host and config handling (archlinux/signstar inspired)"
+upstream = ["https://github.com/archlinux/signstar"]
 
 [contract]
-provides = ["component"]
+provides = ["signstar-protocol", "signstar-host", "signstar-config"]
 depends_on = []
 
 [maturity]
 status = "Implemented"
-test_evidence = "Compiles and passes AAA unit tests"
-next_milestone = "Hardware and runtime integration"
+test_evidence = "cargo test: 18 integration tests pass (protocol roundtrip, host signing, config precedence, certificate framing)"
+next_milestone = "NetHSM/YubiHSM2 backend integration via nethsm SDK"
