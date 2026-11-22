@@ -16,9 +16,11 @@
 pub mod backend;
 pub mod config;
 pub mod error;
+pub mod gpg;
 pub mod request;
 
 pub use backend::{BackendType, Host, LocalFileSigner, Signer};
+pub use gpg::GpgSigner;
 pub use config::{
     CONFIG_DIRS_BY_PRECEDENCE, CONFIG_FILE, ConfigError, ConfigResolver, DEFAULT_CONFIG_DIR,
     ETC_OVERRIDE_CONFIG_DIR, RUN_OVERRIDE_CONFIG_DIR, USR_LOCAL_OVERRIDE_CONFIG_DIR,
